@@ -20,7 +20,7 @@ const shares = ether
 async function main() {
   
     // Fetch Accounts
-    console.log(`Fetchinf accounts & Network \n`)
+    console.log(`Fetching accounts & Network \n`)
     const accounts = await ethers.getSigners()
     const deployer = accounts[0]
     const investor1 = accounts[1]
