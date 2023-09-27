@@ -25,7 +25,6 @@ const Swap = ()=> {
 
     const[showAlert, setShowAlert] = useState(false)
 
-
     const provider = useSelector(state=>state.provider.connection)
     const account = useSelector(state=>state.provider.account)
 
@@ -94,8 +93,6 @@ const Swap = ()=> {
         await getPrice()
 
         setShowAlert(true)
-
-    
     
       }
 
@@ -149,7 +146,7 @@ const Swap = ()=> {
 
                         </Row>
 
-                        <Row className='my-3'>
+                        <Row className='my-4'>
 
                             <div className='d-flex justify-content-between'>
                                 <Form.Label><strong>Output:</strong></Form.Label>
@@ -164,8 +161,8 @@ const Swap = ()=> {
                                 </Form.Text>
                             </div>
 
-                            <InputGroup>
-                                <Form.Control type='number' placeholder='0.0' value = { outputAmount === 0 ? " " : outputAmount } disabled />
+                            <InputGroup size="sm">
+                                <Form.Control type='number' placeholder='0.0' value = { outputAmount === 0 ? "" : outputAmount } disabled />
                                 <DropdownButton variant='outline-secondary' title={outputToken? outputToken : " Select Token "} >
                                 <Dropdown.Item onClick={(e)=> setOutputToken(e.target.innerHTML)}>DAPP</Dropdown.Item>
                                 <Dropdown.Item onClick={(e)=> setOutputToken(e.target.innerHTML)}>USD</Dropdown.Item>

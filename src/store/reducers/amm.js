@@ -6,6 +6,11 @@ export const amm = createSlice ({
         contract: null,
         shares: 0,
         swaps: [],
+        depositing: {
+            isDepositing: false,
+            isSuccess: false,
+            transactionHash: null
+        },
         swapping: {
             isSwapping: false,
             isSuccess: false,
@@ -33,10 +38,25 @@ export const amm = createSlice ({
             state.swapping.isSwapping = false
             state.swapping.isSuccess = false
             state.swapping.transactionHash = null
+        },
+        depositRequest: (state, action)=>{
+            state.depositing.isDepositing = true
+            state.depositing.isSuccess = false
+            state.depositing.transactionHash = null
+        },
+        depositSuccess: (state, action)=>{
+            state.depositing.isDepositing = false
+            state.depositing.isSuccess = true
+            state.depositing.transactionHash = action.payload
+        },
+        depositFail: (state, action)=>{
+            state.depositing.isDepositing = false
+            state.depositing.isSuccess = false
+            state.depositing.transactionHash = null
         }
     }
 })
 
-export const { setContract, sharesLoaded, swapRequest, swapSuccess, swapFail } = amm.actions;
+export const { setContract, sharesLoaded, depositRequest, depositSuccess, depositFail, swapRequest, swapSuccess, swapFail } = amm.actions;
 
 export default amm.reducer;
