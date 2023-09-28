@@ -10,7 +10,7 @@ import { ethers } from 'ethers'
 
 import Alert from './Alert'
 
-import { addLiquidity,loadBalances } from '../store/interactions';
+import { addLiquidity, loadBalances } from '../store/interactions';
 
 
 const Deposit = ()=> {
@@ -32,6 +32,7 @@ const Deposit = ()=> {
     const isDepositing = useSelector(state => state.amm.depositing.isDepositing)
     const isSuccess = useSelector(state => state.amm.depositing.isSuccess)
     const transactionHash = useSelector(state => state.amm.depositing.transactionHash)
+
     const dispatch = useDispatch()
 
     const amountHandler = async(e)=>{
@@ -69,7 +70,7 @@ const Deposit = ()=> {
         const _token1Amount = ethers.utils.parseUnits(token1Amount, 'ether') //converts to wei
         const _token2Amount = ethers.utils.parseUnits(token2Amount, 'ether') //converts to wei
 
-        await addLiquidity(provider, amm, tokens, [_token1Amount], [_token2Amount], dispatch)
+        await addLiquidity(provider, amm, tokens, [_token1Amount, _token2Amount], dispatch)
 
         await loadBalances(amm, tokens, account, dispatch)
 
@@ -87,7 +88,7 @@ const Deposit = ()=> {
                         <Row >
 
                             <Form.Text className='text-end my-2' muted>
-                                Balance: {balances[0]}
+                                Balance:{balances[0]}
                             </Form.Text>
 
                             <InputGroup>
@@ -101,7 +102,7 @@ const Deposit = ()=> {
                                 value={token1Amount === 0 ? "" : token1Amount} 
                                 />
                                 <InputGroup.Text style={{width:'100px'}} className='justify-content-center'>
-                                    {symbols && symbols[0]}
+                                {symbols && symbols[0]}
                                 </InputGroup.Text>
                             </InputGroup>
 
@@ -122,13 +123,14 @@ const Deposit = ()=> {
                                 value={token2Amount === 0 ? "" : token2Amount} 
                                 />
                                 <InputGroup.Text style={{width:'100px'}} className='justify-content-center'>
-                                   {symbols && symbols[1]}
+                                {symbols && symbols[1]}
                                 </InputGroup.Text>
                             </InputGroup>
 
                         </Row>
 
                         <Row className='my-3'>
+                        
                         {isDepositing ? (
                             <Spinner animation='border' style={{ display:'block', margin:'0 auto' }}/>
                         ) : (
@@ -172,7 +174,7 @@ const Deposit = ()=> {
             )}
             
         </div>
-    )
+    );
 }
 
 export default Deposit;
