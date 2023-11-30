@@ -23,7 +23,6 @@ const Withdraw = ()=> {
     const shares = useSelector(state=>state.amm.shares)
 
     const tokens = useSelector(state=>state.tokens.contracts)
-    const symbols = useSelector(state=>state.tokens.symbols)
     const balances = useSelector(state=>state.tokens.balances)
 
     const amm = useSelector(state=>state.amm.contract)
@@ -100,11 +99,7 @@ const Withdraw = ()=> {
                         </Row>
 
                     </Form>
-
                     
-
-                    
-
                 ):(
                     <p 
                     className='d-flex justify-content-center align-items-center' 

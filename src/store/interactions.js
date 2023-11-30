@@ -4,7 +4,7 @@ import { setNetwork, setAccount, setProvider } from './reducers/provider';
 
 import { setContracts, setSymbols, balancesLoaded } from './reducers/tokens';
 
-import { setContract, sharesLoaded, depositRequest, depositSuccess, depositFail, withdrawRequest, withdrawSuccess, withdrawFail, swapRequest, swapSuccess, swapFail } from './reducers/amm';
+import { setContract, sharesLoaded, swapsLoaded, depositRequest, depositSuccess, depositFail, withdrawRequest, withdrawSuccess, withdrawFail, swapRequest, swapSuccess, swapFail } from './reducers/amm';
 
 
 import TOKEN_ABI from '../abis/Token.json';
@@ -70,7 +70,7 @@ export const loadBalances = async ( amm, tokens, account, dispatch ) => {
     const shares = await amm.shares(account)
     dispatch(sharesLoaded(ethers.utils.formatUnits(shares.toString(), 'ether')))
 }
-////////////////////////////////////////////////--------------------------------------------------------------
+/////////////////////////////////////////////////--------------------------------------------------------------
 // ADD LIQUIDITY
 export const addLiquidity = async (provider, amm, tokens, amounts, dispatch)=>{
 
@@ -99,7 +99,7 @@ export const addLiquidity = async (provider, amm, tokens, amounts, dispatch)=>{
 
 }
 
-////////////////////////////////////////////////--------------------------------------------------------------
+///////////////////////////////////////////////////------------------------------------------------------------
 // REMOVE LIQUIDITY
 export const removeLiquidity = async (provider, amm, shares, dispatch)=>{
 
@@ -120,7 +120,7 @@ export const removeLiquidity = async (provider, amm, shares, dispatch)=>{
 
 }
 
-////////////////////////////////////////////////--------------------------------------------------------------
+//////////////////////////////////////////////////------------------------------------------------------------
 // SWAP
 
 export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
@@ -150,4 +150,24 @@ export const swap = async (provider, amm, token, symbol, amount, dispatch) => {
     } catch(error){
         dispatch(swapFail())
     }
-  }
+}
+
+///////////////////////////////////////////////////-----------------------------------------------------------
+// LOAD ALL SWAPS
+
+export const loadAllSwaps = async (provider, amm, dispatch) => {
+    
+    //Fetch swaps from blockchain...
+  
+    const block = await provider.getBlockNumber()
+
+    const swapStream = await amm.queryFilter('Swap',0,block)
+    const swaps = swapStream.map(event => {
+        return { hash: event.transactionHash, args:event.args}
+    })
+    console.log(swaps)
+
+    dispatch(swapsLoaded(swaps))
+
+}
+

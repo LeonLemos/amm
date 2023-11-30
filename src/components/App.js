@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap'
-import { ethers } from 'ethers'
+
 
 // Components
 import Navigation from './Navigation';
@@ -11,8 +11,6 @@ import Deposit from './Deposit';
 import Withdraw from './Withdraw';
 import Charts from './Charts';
 import Tabs from './Tabs';
-
-
 
 
 import { loadProvider, loadNetwork, loadAccount, loadTokens, loadBalances, loadAMM } from "../store/interactions"
